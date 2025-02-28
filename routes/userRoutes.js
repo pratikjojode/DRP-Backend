@@ -1,10 +1,8 @@
 const express = require("express");
-const {
-  protect,
-  admin,
-} = require("../../DRP-backend/middleware/authMiddleware");
+
 const router = express.Router();
 const User = require("../models/User");
+const { protect, admin } = require("../middleware/authMiddleware");
 
 // Protected admin route example
 router.get("/admin/dashboard", protect, admin, (req, res) => {
