@@ -1,8 +1,5 @@
 const express = require("express");
-const {
-  protect,
-  admin,
-} = require("../../DRP-backend/middleware/authMiddleware");
+
 const {
   createBlog,
   getAllBlogs,
@@ -11,6 +8,7 @@ const {
   getAllBlogsBId,
 } = require("../controllers/blogController");
 const upload = require("../utils/upload");
+const { protect, admin } = require("../middleware/authMiddleware");
 const router = express.Router();
 
 // Create a blog with image upload
