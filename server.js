@@ -56,6 +56,11 @@ app.use(express.json());
 app.use(cors({ origin: "*", credentials: true }));
 if (process.env.NODE_ENV === "development") app.use(morgan("dev"));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.get("/", (req, res) => {
+  res.send("DRP Backend is running successfully! 🚀");
+});
+
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/blogs", blogRoutes);
