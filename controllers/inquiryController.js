@@ -1,21 +1,7 @@
 const nodemailer = require("nodemailer");
 
 const submitInquiry = async (req, res) => {
-  const {
-    name,
-    email,
-    message,
-    courseName,
-    contact,
-    educationLevel,
-    universityName,
-    inquiryType,
-    preferredContactMethod,
-    preferredTime,
-    city,
-    country,
-    referralSource,
-  } = req.body;
+  const { name, email, message, courseName, contact } = req.body;
 
   try {
     let transporter = nodemailer.createTransport({
@@ -63,33 +49,14 @@ const submitInquiry = async (req, res) => {
                 <p><strong>Contact Number:</strong> ${
                   contact || "Not provided"
                 }</p>
-                <p><strong>Location:</strong> ${city || "Not provided"}, ${
-        country || "Not provided"
-      }</p>
               </div>
               <div class="section">
                 <h3>Course and Inquiry Details</h3>
                 <p><strong>Course:</strong> ${courseName || "Not provided"}</p>
                 <p><strong>Message:</strong> ${message || "Not provided"}</p>
-                <p><strong>Education Level:</strong> ${
-                  educationLevel || "Not provided"
-                }</p>
-                <p><strong>University:</strong> ${
-                  universityName || "Not provided"
-                }</p>
-                <p><strong>Inquiry Type:</strong> ${
-                  inquiryType || "Not provided"
-                }</p>
+              
               </div>
-              <div class="section">
-                <h3>Preferred Contact</h3>
-                <p><strong>Preferred Method:</strong> ${
-                  preferredContactMethod || "Not provided"
-                }</p>
-                <p><strong>Preferred Time:</strong> ${
-                  preferredTime || "Not provided"
-                }</p>
-              </div>
+             
               <a href="mailto:${email}" class="cta-button">Reply to Inquiry</a>
               <div class="footer">
                 <p>Thank you for your inquiry. Our team will reach out to you soon.</p>
