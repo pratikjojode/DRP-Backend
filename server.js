@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log("User disconnected");
   });
-});
+}); 
 
 app.use(express.json());
 app.use(cors({ origin: "*", credentials: true }));

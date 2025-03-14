@@ -6,16 +6,18 @@ const createBlog = async (req, res) => {
   const { title, content } = req.body;
 
   try {
-    // Log the received file and body data for debugging
     console.log("Received file:", req.file);
     console.log("Request body:", req.body);
+
+    // Normalize image path
+    const imagePath = req.file ? req.file.path.replace(/\\/g, "/") : null;
 
     // Create blog post
     const blog = await Blog.create({
       title,
       content,
-      image: req.file ? req.file.path : null, // Save image path if uploaded
-      author: req.user ? req.user.id : null, // Ensure author is set
+      image: imagePath, // Store fixed path
+      author: req.user ? req.user.id : null,
     });
 
     res.status(201).json({
@@ -24,7 +26,7 @@ const createBlog = async (req, res) => {
         id: blog._id,
         title: blog.title,
         content: blog.content,
-        image: blog.image ? blog.image.replace(/\\/g, "/") : null, // Check if image exists before replacing
+        image: imagePath, // No need to fix again
         author: blog.author,
       },
     });
