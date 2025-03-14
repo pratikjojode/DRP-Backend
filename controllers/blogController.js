@@ -1,22 +1,25 @@
 const { default: mongoose } = require("mongoose");
 const Blog = require("../models/Blog");
 
-// Create a blog with image upload
+const { upload } = require("../config/cloudinaryConfig");
+
 const createBlog = async (req, res) => {
   const { title, content } = req.body;
 
   try {
     console.log("Received file:", req.file);
-    console.log("Request body:", req.body);
 
-    // Normalize image path
-    const imagePath = req.file ? req.file.path.replace(/\\/g, "/") : null;
+    const imagePath = req.file
+      ? req.file.path.replace(
+          /^https?:\/\/res.cloudinary.com\/dnxicetc5\/image\/upload\//,
+          ""
+        )
+      : null;
 
-    // Create blog post
     const blog = await Blog.create({
       title,
       content,
-      image: imagePath, // Store fixed path
+      image: imagePath, // Store only relative path
       author: req.user ? req.user.id : null,
     });
 
@@ -26,7 +29,7 @@ const createBlog = async (req, res) => {
         id: blog._id,
         title: blog.title,
         content: blog.content,
-        image: imagePath, // No need to fix again
+        image: blog.image, // Return relative path
         author: blog.author,
       },
     });
